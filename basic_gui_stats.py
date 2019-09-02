@@ -59,17 +59,18 @@ def show_plot(*args):
             yax = str(ylabel.get())
             xax = str(xlabel.get())
             plt.figure(1)
-            fig, ax = plt.subplots()
-            ax.hist(data_array)
+            #fig, ax = plt.subplots()
+            ax.hist(data_array, color='red')
             plt.xlabel(xax)
             plt.title(ttl)
             plt.ylabel(yax)
             textstr = '\n'.join((
                 r'$\mathrm{median}=%.2f$' % (np.median(data_array), ),
                 r'$\mathrm{average}=%.2f$' % (np.average(data_array), ),
+                r'$\mathrm{Entries}=%.2f$' % (len(data_array), ),
                 r'$\sigma=%.2f$' % (np.std(data_array), )))
     
-            props = dict(boxstyle='round', facecolor='wheat', alpha=0.5)
+            props = dict(boxstyle='round', facecolor='wheat', alpha=1)
             ax.text(0.05, 0.95, textstr, transform=ax.transAxes, fontsize=14, verticalalignment='top', bbox=props)
             plt.pause(0.5)   
     
@@ -125,6 +126,8 @@ def add_data(*args):
         show_plot()
         head = "[" + str(index) + "]:\t" + str(data_array[index])
         dlist.insert(END, head, '')
+        
+        
 
                     
     except ValueError:
@@ -241,5 +244,8 @@ for child in mainframe.winfo_children(): child.grid_configure(padx=5, pady=5)
 
 data_entry.focus()
 root.bind('<Return>', add_data)
+
+fig, ax = plt.subplots()
+
 root.mainloop()
 
